@@ -15,6 +15,7 @@ $options['query'] = $query;
 $options['type'] = "user";
 $options['offset'] = $offset;
 $options['limit'] = $limit;
+$options['order_by'] = 'ue.name';
 
 $results = elgg_trigger_plugin_hook('search', 'user', $options, array());
 $count = $results['count'];
