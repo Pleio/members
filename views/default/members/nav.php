@@ -4,6 +4,11 @@
  */
 
 $tabs = array(
+	'alpha' => array(
+		'title' => elgg_echo('members:labels:alpha'),
+		'url' => "members/alpha",
+		'selected' => $vars['selected'] == 'alpha',
+	),
 	'newest' => array(
 		'title' => elgg_echo('members:label:newest'),
 		'url' => "members/newest",

@@ -4,6 +4,8 @@
  *
  */
 
+global $CONFIG;
+
 $site = elgg_get_site_entity();
 
 $options = array(
@@ -37,7 +39,12 @@ switch ($vars['page']) {
 		$content = get_online_users();
 		break;
 	case 'newest':
+		$content = elgg_list_entities_from_relationship($options);
+		break;	
+	case 'alpha':
 	default:
+		$options["joins"] = array("INNER JOIN {$CONFIG->dbprefix}users_entity o ON (e.guid = o.guid)");
+		$options["order_by"] = "o.name";
 		$content = elgg_list_entities_from_relationship($options);
 		break;
 }
