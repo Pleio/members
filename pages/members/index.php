@@ -11,16 +11,6 @@ $site = elgg_get_site_entity();
 $title = elgg_echo('members');
 
 switch ($vars['page']) {
-	case 'popular':
-		$options['relationship'] = 'friend';
-		$options['inverse_relationship'] = false;
-		unset($options['relationship_guid']);
-		
-		$options["joins"] = array("JOIN " . elgg_get_config("dbprefix") . "entity_relationships r2 ON e.guid = r2.guid_one");
-		$options["wheres"] = array("(r2.guid_two = " . $site->getGUID() . " AND r2.relationship = 'member_of_site')");
-		
-		$content = elgg_list_entities_from_relationship_count($options);
-		break;
 	case 'online':
 		$content = get_online_users();
 		break;
@@ -52,11 +42,12 @@ switch ($vars['page']) {
 				"limit" => get_input("limit") ? get_input("limit") : 10,
 				"pagination" => true
 			]);
+		} else {
+			$options["joins"] = array("INNER JOIN {$CONFIG->dbprefix}users_entity o ON (e.guid = o.guid)");
+			$options["order_by"] = "o.name";
+			$content = elgg_list_entities_from_relationship($options);
 		}
 
-		/*$options["joins"] = array("INNER JOIN {$CONFIG->dbprefix}users_entity o ON (e.guid = o.guid)");
-		$options["order_by"] = "o.name";
-		$content = elgg_list_entities_from_relationship($options);*/
 		break;
 }
 
