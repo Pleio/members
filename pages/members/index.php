@@ -33,7 +33,7 @@ switch ($vars['page']) {
 	case 'alpha':
 	default:
 		if (class_exists("ESInterface")) {
-			$result = ESInterface::get()->search("*", SEARCH_DEFAULT, "user", [], get_input("limit"), get_input("offset"), "name", "asc");
+			$result = ESInterface::get()->search("*", SEARCH_DEFAULT, "user", [], get_input("limit"), get_input("offset"), "name.raw", "asc");
 
 			$num_members = $result["count"];
 			$content = elgg_view_entity_list($result["hits"], [
